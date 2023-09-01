@@ -29,6 +29,8 @@ import java.util.Map;
 
 public class TestUtil 
 {
+  // Compares two JsonNode objects for equivalence.
+  // This method is recursive and can handle nested JSON objects and arrays.
   public static boolean compareJsonObjects(JsonNode node1, JsonNode node2) 
   {
     if (node1.equals(node2)) {
