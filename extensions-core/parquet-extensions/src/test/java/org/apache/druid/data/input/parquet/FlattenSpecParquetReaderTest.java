@@ -19,6 +19,8 @@
 
 package org.apache.druid.data.input.parquet;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import org.apache.druid.data.input.ColumnsFilter;
 import org.apache.druid.data.input.InputEntityReader;
@@ -27,6 +29,7 @@ import org.apache.druid.data.input.InputRowListPlusRawValues;
 import org.apache.druid.data.input.InputRowSchema;
 import org.apache.druid.data.input.impl.DimensionsSpec;
 import org.apache.druid.data.input.impl.TimestampSpec;
+import org.apache.druid.data.input.parquet.util.TestUtil;
 import org.apache.druid.java.util.common.parsers.JSONPathFieldSpec;
 import org.apache.druid.java.util.common.parsers.JSONPathFieldType;
 import org.apache.druid.java.util.common.parsers.JSONPathSpec;
@@ -93,7 +96,16 @@ public class FlattenSpecParquetReaderTest extends BaseParquetReaderTest
         flattenSpec
     );
     List<InputRowListPlusRawValues> sampled = sampleAllRows(reader);
-    Assert.assertEquals(FLAT_JSON, DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+    
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      JsonNode flatJsonNode = mapper.readTree(FLAT_JSON);
+      JsonNode sampledJsonNode = mapper.readTree(DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+      Assert.assertTrue(TestUtil.compareJsonObjects(flatJsonNode, sampledJsonNode));
+    } 
+    catch (IOException e) {
+      Assert.fail("Failed Json Assert");
+    }
   }
 
   @Test
@@ -126,7 +138,16 @@ public class FlattenSpecParquetReaderTest extends BaseParquetReaderTest
         JSONPathSpec.DEFAULT
     );
     List<InputRowListPlusRawValues> sampled = sampleAllRows(reader);
-    Assert.assertEquals(FLAT_JSON, DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+    
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      JsonNode flatJsonNode = mapper.readTree(FLAT_JSON);
+      JsonNode sampledJsonNode = mapper.readTree(DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+      Assert.assertTrue(TestUtil.compareJsonObjects(flatJsonNode, sampledJsonNode));
+    } 
+    catch (IOException e) {
+      Assert.fail("Failed Json Assert");
+    }
   }
 
   @Test
@@ -167,7 +188,16 @@ public class FlattenSpecParquetReaderTest extends BaseParquetReaderTest
         flattenSpec
     );
     List<InputRowListPlusRawValues> sampled = sampleAllRows(reader);
-    Assert.assertEquals(FLAT_JSON, DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      JsonNode flatJsonNode = mapper.readTree(FLAT_JSON);
+      JsonNode sampledJsonNode = mapper.readTree(DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+      Assert.assertTrue(TestUtil.compareJsonObjects(flatJsonNode, sampledJsonNode));
+    } 
+    catch (IOException e) {
+      Assert.fail("Failed Json Assert");
+    }
   }
 
   @Test
@@ -206,7 +236,15 @@ public class FlattenSpecParquetReaderTest extends BaseParquetReaderTest
     );
     List<InputRowListPlusRawValues> sampled = sampleAllRows(reader);
 
-    Assert.assertEquals(FLAT_JSON, DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      JsonNode flatJsonNode = mapper.readTree(FLAT_JSON);
+      JsonNode sampledJsonNode = mapper.readTree(DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+      Assert.assertTrue(TestUtil.compareJsonObjects(flatJsonNode, sampledJsonNode));
+    } 
+    catch (IOException e) {
+      Assert.fail("Failed Json Assert");
+    }
   }
 
 
@@ -243,7 +281,16 @@ public class FlattenSpecParquetReaderTest extends BaseParquetReaderTest
         flattenSpec
     );
     List<InputRowListPlusRawValues> sampled = sampleAllRows(reader);
-    Assert.assertEquals(NESTED_JSON, DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      JsonNode nestedJsonNode = mapper.readTree(NESTED_JSON);
+      JsonNode sampledJsonNode = mapper.readTree(DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+      Assert.assertTrue(TestUtil.compareJsonObjects(nestedJsonNode, sampledJsonNode));
+    } 
+    catch (IOException e) {
+      Assert.fail("Failed Json Assert");
+    }
   }
 
   @Test
@@ -276,7 +323,16 @@ public class FlattenSpecParquetReaderTest extends BaseParquetReaderTest
         JSONPathSpec.DEFAULT
     );
     List<InputRowListPlusRawValues> sampled = sampleAllRows(reader);
-    Assert.assertEquals(NESTED_JSON, DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      JsonNode nestedJsonNode = mapper.readTree(NESTED_JSON);
+      JsonNode sampledJsonNode = mapper.readTree(DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+      Assert.assertTrue(TestUtil.compareJsonObjects(nestedJsonNode, sampledJsonNode));
+    } 
+    catch (IOException e) {
+      Assert.fail("Failed Json Assert");
+    }
   }
 
   @Test
@@ -319,7 +375,16 @@ public class FlattenSpecParquetReaderTest extends BaseParquetReaderTest
         flattenSpec
     );
     List<InputRowListPlusRawValues> sampled = sampleAllRows(reader);
-    Assert.assertEquals(NESTED_JSON, DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      JsonNode nestedJsonNode = mapper.readTree(NESTED_JSON);
+      JsonNode sampledJsonNode = mapper.readTree(DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+      Assert.assertTrue(TestUtil.compareJsonObjects(nestedJsonNode, sampledJsonNode));
+    } 
+    catch (IOException e) {
+      Assert.fail("Failed Json Assert");
+    }
   }
 
   @Test
@@ -360,7 +425,16 @@ public class FlattenSpecParquetReaderTest extends BaseParquetReaderTest
         flattenSpec
     );
     List<InputRowListPlusRawValues> sampled = sampleAllRows(reader);
-    Assert.assertEquals(NESTED_JSON, DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      JsonNode nestedJsonNode = mapper.readTree(NESTED_JSON);
+      JsonNode sampledJsonNode = mapper.readTree(DEFAULT_JSON_WRITER.writeValueAsString(sampled.get(0).getRawValues()));
+      Assert.assertTrue(TestUtil.compareJsonObjects(nestedJsonNode, sampledJsonNode));
+    } 
+    catch (IOException e) {
+      Assert.fail("Failed Json Assert");
+    }
   }
 
   @Test
